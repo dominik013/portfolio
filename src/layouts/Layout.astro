@@ -1,0 +1,56 @@
+---
+import { getCollection } from 'astro:content';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import '../styles/global.css';
+interface Props { title?: string; description?: string; noindex?: boolean; }
+const { title = 'Software, papers & small experiments', description = 'The personal portfolio of Dominik Reichinger. Software projects, mobile authentication research, and experiments.', noindex = false } = Astro.props;
+const notes = await getCollection('notes', ({ data }) => !data.draft);
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const fullTitle = `${title} — Dominik Reichinger`;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <script is:inline>
+      (() => {
+        let theme;
+        try { theme = localStorage.getItem('portfolio-theme'); } catch {}
+        document.documentElement.dataset.theme = theme === 'light' || theme === 'dark' ? theme : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      })();
+    </script>
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Dominik Reichinger" />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Dominik Reichinger" />
+    <meta name="theme-color" content="#fffaf6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#161616" media="(prefers-color-scheme: dark)" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="wordmark" href="/" aria-label="Dominik Reichinger — home">Dominik<br />Reichinger<span class="red-dot" aria-hidden="true">.</span></a>
+        <nav class="main-nav" aria-label="Main navigation">
+          <a href="/#work">Work</a><a href="/#papers">Papers</a>
+          {notes.length > 0 && <a href="/notes/">Notes</a>}
+          <a href="/#about">About</a><ThemeToggle />
+        </nav>
+      </header>
+      <main id="main"><slot /></main>
+      <footer class="site-footer">
+        <span>© {new Date().getFullYear()} Dominik Reichinger</span>
+        <div><a href="https://github.com/dominik013">GitHub ↗</a><a href="https://github.com/dominik013/portfolio">Site source ↗</a><a href="#main">Back to top ↑</a></div>
+      </footer>
+    </div>
+  </body>
+</html>

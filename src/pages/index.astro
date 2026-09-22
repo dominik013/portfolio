@@ -1,0 +1,60 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const papers = await getCollection('papers');
+const categories = ['Websites', 'Research', 'Coursework', 'Forks'] as const;
+---
+<Layout>
+  <section class="hero" aria-labelledby="intro-title">
+    <div>
+      <p class="eyebrow">A personal collection / Software & research</p>
+      <h1 id="intro-title">Software, papers<br />& small<br class="mobile-break" /> experiments<span class="hero-period">.</span></h1>
+    </div>
+    <div class="hero-aside"><p>I'm Dominik. I build applications and explore ideas through code and research.</p><a class="text-link" href="#work">Explore the collection <span aria-hidden="true">↓</span></a></div>
+  </section>
+
+  <section class="work-section" id="work" aria-labelledby="work-title">
+    <div class="section-heading"><h2 id="work-title"><span class="section-index">01 /</span> Work</h2><span class="eyebrow">Selected projects & public repositories</span></div>
+    <div class="filters" role="group" aria-label="Filter projects by category" hidden>
+      <button type="button" data-filter="all" aria-pressed="true">All <span>{projects.length}</span></button>
+      {categories.map(category => <button type="button" data-filter={category} aria-pressed="false">{category} <span>{projects.filter(p => p.data.category === category).length}</span></button>)}
+    </div>
+    <p class="sr-only" id="filter-status" aria-live="polite" aria-atomic="true"></p>
+    {categories.map(category => <section class="project-group" data-category={category} aria-label={category}>
+      <div class="group-label"><h3>{category}</h3>{category === 'Forks' && <p>Forks of community projects, credited to their original authors.</p>}</div>
+      {projects.filter(project => project.data.category === category).map(project => <article class="project-row">
+        <span class="project-number" aria-hidden="true">{String(project.data.order).padStart(2, '0')}</span>
+        <div class="project-copy"><h4><a href={`/projects/${project.id}/`}>{project.data.title}<span class="project-arrow" aria-hidden="true">↗</span></a></h4><p>{project.data.description}</p><ul class="stack" aria-label="Technologies">{project.data.stack.map(tech => <li>{tech}</li>)}</ul></div>
+        <span class="project-year">{project.data.year}</span>
+      </article>)}
+    </section>)}
+  </section>
+
+  <section class="papers-section" id="papers" aria-labelledby="papers-title">
+    <div class="section-heading"><h2 id="papers-title"><span class="section-index">02 /</span> Papers</h2><span class="eyebrow">Published research</span></div>
+    {papers.map(paper => <article class="paper-feature">
+      <div class="paper-meta"><span class="eyebrow">{paper.data.journal}</span><span>2021 · Vol. 11, Issue 24</span><span>Research article</span></div>
+      <div><h3><a href={`/papers/${paper.id}/`}>{paper.data.title}</a></h3><p class="paper-authors">{paper.data.authors.join(' · ')}</p><p>Unlocking a phone is only one moment of authentication. This paper explores how touch gestures and accelerometer data can continuously verify the user, using an Android system and a Hidden Markov Model.</p><div class="action-links"><a class="text-link" href={`/papers/${paper.id}/`}>Summary & citation ↗</a><a href={paper.data.url}>Read the paper ↗</a><a href={paper.data.code}>Code & data ↗</a></div></div>
+    </article>)}
+  </section>
+
+  <section class="about-section" id="about" aria-labelledby="about-title">
+    <div class="section-heading"><h2 id="about-title"><span class="section-index">03 /</span> About</h2><span class="eyebrow">The person behind the projects</span></div>
+    <div class="about-grid"><p class="about-statement">A place for things<br />I build and<br /><em>questions I explore.</em></p><div class="about-copy"><p>I'm Dominik Reichinger, a software developer with work spanning websites, mobile applications, and authentication research.</p><p>My research at FH Hagenberg explored continuous mobile user authentication by combining biometric signals. This site brings that work together with applications, coursework, and the open-source projects I follow.</p><a class="text-link" href="https://github.com/dominik013">Find me on GitHub ↗</a></div></div>
+  </section>
+</Layout>
+<script>
+  const filters = document.querySelector<HTMLDivElement>('.filters');
+  const buttons = [...document.querySelectorAll<HTMLButtonElement>('[data-filter]')];
+  const groups = [...document.querySelectorAll<HTMLElement>('[data-category]')];
+  const status = document.querySelector('#filter-status');
+  if (filters) filters.hidden = false;
+  buttons.forEach(button => button.addEventListener('click', () => {
+    const category = button.dataset.filter;
+    buttons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+    groups.forEach(group => { group.hidden = category !== 'all' && group.dataset.category !== category; });
+    const count = groups.filter(group => !group.hidden).reduce((total, group) => total + group.querySelectorAll('.project-row').length, 0);
+    if (status) status.textContent = `Showing ${count} ${count === 1 ? 'project' : 'projects'}${category === 'all' ? '' : ` in ${category}`}.`;
+  }));
+</script>

@@ -1,0 +1,31 @@
+<button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>
+  <span class="theme-symbol" aria-hidden="true">◐</span><span>Dark mode</span>
+</button>
+<script>
+  const button = document.querySelector<HTMLButtonElement>('.theme-toggle');
+  const media = window.matchMedia('(prefers-color-scheme: dark)');
+  const key = 'portfolio-theme';
+  const readPreference = () => {
+    try { const stored = localStorage.getItem(key); return stored === 'dark' || stored === 'light' ? stored : null; }
+    catch { return null; }
+  };
+  let preference = readPreference();
+  function apply() {
+    const theme = preference || (media.matches ? 'dark' : 'light');
+    document.documentElement.dataset.theme = theme;
+    button?.setAttribute('aria-pressed', String(theme === 'dark'));
+  }
+  if (button) {
+    button.hidden = false;
+    button.addEventListener('click', () => {
+      preference = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      try { localStorage.setItem(key, preference); } catch { /* The toggle still works without storage. */ }
+      apply();
+    });
+  }
+  media.addEventListener('change', () => { if (!preference) apply(); });
+  window.addEventListener('storage', (event) => {
+    if (event.key === key || event.key === null) { preference = readPreference(); apply(); }
+  });
+  apply();
+</script>

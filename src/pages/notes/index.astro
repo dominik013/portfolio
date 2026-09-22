@@ -1,0 +1,9 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+const notes = (await getCollection('notes', ({ data }) => !data.draft)).sort((a,b) => b.data.date.getTime() - a.data.date.getTime());
+---
+<Layout title="Notes" description="Notes and writing by Dominik Reichinger." noindex={notes.length === 0}>
+  <div class="detail-header"><a class="back-link" href="/">← Home</a><p class="eyebrow">Writing / Notes</p><h1>Thinking out loud.</h1></div>
+  {notes.length === 0 ? <p class="empty-notes">No notes published yet. In the meantime, explore my <a href="/#work">projects</a> and <a href="/#papers">research</a>.</p> : <div class="notes-list">{notes.map(note => <article><p class="eyebrow">{note.data.date.toISOString().slice(0, 10)}</p><h2><a href={`/notes/${note.id}/`}>{note.data.title}</a></h2><p>{note.data.description}</p></article>)}</div>}
+</Layout>

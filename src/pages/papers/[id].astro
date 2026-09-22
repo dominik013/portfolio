@@ -1,0 +1,17 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+export async function getStaticPaths() {
+  return (await getCollection('papers')).map(paper => ({ params: { id: paper.id }, props: { paper } }));
+}
+interface Props { paper: CollectionEntry<'papers'>; }
+const { paper } = Astro.props;
+const { Content } = await render(paper);
+const metadata = { '@context': 'https://schema.org', '@type': 'ScholarlyArticle', headline: paper.data.title, author: paper.data.authors.map(name => ({ '@type': 'Person', name })), datePublished: paper.data.date.toISOString().slice(0, 10), sameAs: `https://doi.org/${paper.data.doi}` };
+---
+<Layout title={paper.data.title} description={paper.data.description}>
+  <script type="application/ld+json" set:html={JSON.stringify(metadata).replace(/</g, '\\u003c')} />
+  <div class="detail-header"><a class="back-link" href="/#papers">← All papers</a><p class="eyebrow">{paper.data.journal} / {paper.data.date.getUTCFullYear()}</p><h1 class="paper-title">{paper.data.title}</h1><p class="paper-authors">{paper.data.authors.join(' · ')}</p><div class="action-links"><a class="solid-link" href={paper.data.url}>Read the paper ↗</a><a href={paper.data.code}>Code & data ↗</a><a href="/reichinger-2021.bib" download>Download BibTeX ↓</a></div></div>
+  <article class="prose"><Content /></article>
+</Layout>

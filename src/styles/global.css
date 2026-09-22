@@ -39,9 +39,9 @@
   .hero-period { color:var(--ink); }
   .mobile-break { display:none; }
   .text-link { color:var(--link); text-decoration:underline; }
-  .section-heading { border-top:2px solid var(--ink); border-bottom:1px solid var(--line); padding:19px 0; display:flex; justify-content:space-between; gap:20px; align-items:center; }
-  .section-heading h2 { font-size:20px; font-weight:400; white-space:nowrap; }
-  .section-index { font:12px/1.5 'Courier New',monospace; color:var(--muted); margin-right:24px; }
+  .section-heading { border-top:2px solid var(--ink); padding:16px 0; display:flex; justify-content:space-between; gap:20px; align-items:baseline; flex-wrap:wrap; }
+  .section-heading h2 { font:400 20px/1.25 'Courier New',Courier,monospace; text-transform:uppercase; white-space:nowrap; }
+  .section-bracket { color:var(--red); }
   .section-heading > .eyebrow { color:var(--muted); text-align:right; }
   .filters { display:flex; flex-wrap:wrap; gap:8px; padding:24px 0 4px; }
   .filters button { border:1px solid var(--line); border-radius:0; background:transparent; color:var(--ink); padding:9px 14px; min-height:44px; font-size:13px; }
@@ -110,9 +110,8 @@
     .hero h1 { font-size:clamp(40px,9.8vw,54px); }
     .mobile-break { display:block; }
     .hero .eyebrow { font-size:11px; }
-    .section-heading { align-items:baseline; }
-    .section-heading > .eyebrow { max-width:150px; font-size:11px; }
-    .section-index { margin-right:12px; }
+    .section-heading { gap:8px; }
+    .section-heading > .eyebrow { flex-basis:100%; text-align:left; font-size:11px; }
     .project-row { grid-template-columns:26px minmax(0,1fr); gap:10px; padding-block:23px; }
     .project-year { grid-column:2; text-align:left; padding-top:0; }
     .project-copy h4 { font-size:27px; }

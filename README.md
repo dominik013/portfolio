@@ -40,11 +40,11 @@ Connect `dominik013/portfolio` in Cloudflare **Workers & Pages → Pages → Imp
 | Build output directory | `dist` |
 | Root directory | repository root |
 | Node version | `.node-version` (`24.13.1`) |
-| `PUBLIC_SITE_URL` | `https://dominik-reichinger.pages.dev` (or the chosen custom domain) |
+| `PUBLIC_SITE_URL` | `https://reichinger.dev` (optional override of the default) |
 
 Cloudflare builds and publishes pushes to the production branch and can provide preview deployments for pull requests. The build command includes validation, so publication fails if those checks fail. GitHub Actions is an additional check, not a separate Cloudflare deployment gate.
 
-The Astro `site` URL defaults to the Pages address above. Set `PUBLIC_SITE_URL` when changing the canonical domain; this controls canonical links, Open Graph URLs, robots.txt, and the sitemap. A top-level `404.html` provides a real not-found page on Pages.
+The Astro `site` URL defaults to `https://reichinger.dev`. Set `PUBLIC_SITE_URL` when changing the canonical domain; this controls canonical links, Open Graph URLs, robots.txt, and the sitemap. A top-level `404.html` provides a real not-found page on Pages.
 
 ## Sources
 

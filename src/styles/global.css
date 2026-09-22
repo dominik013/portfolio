@@ -34,10 +34,8 @@
   .theme-toggle { display:flex; gap:8px; align-items:center; border:1px solid var(--ink); border-radius:0; color:var(--ink); background:transparent; padding:9px 12px; min-height:44px; font-size:12px; }
   .theme-symbol { font-size:20px; line-height:1; }
   .theme-toggle[aria-pressed=true] { background:var(--red); color:var(--button-ink); border-color:var(--red); }
-  .hero { display:grid; grid-template-columns:minmax(0,3fr) minmax(210px,1fr); gap:36px; align-items:end; padding:76px 0 78px; }
+  .hero { padding:76px 0 78px; }
   .hero h1 { font:400 clamp(45px,6.7vw,88px)/1.02 Georgia,'Times New Roman',serif; letter-spacing:-.055em; color:var(--red); margin-top:24px; }
-  .hero-aside { max-width:270px; padding-bottom:6px; }
-  .hero-aside p { margin-bottom:24px; }
   .hero-period { color:var(--ink); }
   .mobile-break { display:none; }
   .text-link { color:var(--link); text-decoration:underline; }
@@ -74,7 +72,7 @@
   .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:70px; padding:44px 0 70px; }
   .about-statement { font:400 clamp(30px,4vw,48px)/1.13 Georgia,serif; letter-spacing:-.035em; }
   .about-statement em { color:var(--red); }
-  .about-copy p { margin-bottom:20px; }
+  .about-copy { align-self:end; }
   .site-footer { display:flex; justify-content:space-between; align-items:baseline; gap:24px; flex-wrap:wrap; border-top:1px solid var(--ink); padding:24px 0 34px; color:var(--muted); }
   .site-footer > div { display:flex; flex-wrap:wrap; gap:20px; }
   .site-footer a { padding-block:10px; }
@@ -98,9 +96,7 @@
   .notes-list article { border-top:1px solid var(--line); padding:25px 0; }
   .notes-list h2 { font:400 30px Georgia,serif; margin:12px 0; }
   @media (max-width:850px) {
-    .hero { grid-template-columns:1fr; padding-block:54px; gap:30px; }
-    .hero-aside { max-width:440px; }
-    .hero-aside p { margin-bottom:12px; }
+    .hero { padding-block:54px; }
     .hero h1 { font-size:clamp(45px,8.5vw,70px); }
     .paper-feature { grid-template-columns:1fr; gap:20px; }
     .paper-meta { flex-direction:row; flex-wrap:wrap; gap:7px 15px; }

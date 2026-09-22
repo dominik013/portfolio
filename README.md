@@ -23,7 +23,7 @@ npm run preview
 - `src/pages/index.astro`: introduction and About text.
 - `src/styles/global.css`: colours and layout.
 
-Projects are a curated snapshot of public repositories as of 22 September 2026. Private repositories are excluded. The Forks category identifies upstream work explicitly; no contribution claims are inferred from fork ownership. The new portfolio repository is linked in the footer rather than listed as its own project.
+Projects are a curated snapshot of original public repositories as of 22 September 2026. Private repositories and community forks are excluded. The portfolio repository is linked in the footer rather than listed as its own project.
 
 Category controls progressively enhance the page: all projects remain visible with JavaScript disabled. Theme selection follows the operating system initially, is saved locally when changed, and is applied before rendering to avoid a flash. If local storage is unavailable, the toggle still works for the current page.
 

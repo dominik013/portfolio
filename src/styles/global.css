@@ -26,6 +26,7 @@
 @layer components {
   .site-header { display:flex; align-items:center; justify-content:space-between; gap:24px; padding-block:29px; border-bottom:1px solid var(--ink); }
   .wordmark { font-size:22px; line-height:1.04; letter-spacing:-1px; text-decoration:none; }
+  .wordmark > span { display:block; }
   .red-dot { color:var(--red); }
   .main-nav { display:flex; align-items:center; gap:clamp(16px,2.8vw,36px); flex-wrap:wrap; font-size:14px; }
   .main-nav > a { text-decoration:none; padding-block:10px; }
@@ -41,7 +42,7 @@
   .mobile-break { display:none; }
   .text-link { color:var(--link); text-decoration:underline; }
   .section-heading { border-top:2px solid var(--ink); border-bottom:1px solid var(--line); padding:19px 0; display:flex; justify-content:space-between; gap:20px; align-items:center; }
-  .section-heading h2 { font-size:20px; font-weight:400; }
+  .section-heading h2 { font-size:20px; font-weight:400; white-space:nowrap; }
   .section-index { font:12px/1.5 'Courier New',monospace; color:var(--muted); margin-right:24px; }
   .section-heading > .eyebrow { color:var(--muted); text-align:right; }
   .filters { display:flex; flex-wrap:wrap; gap:8px; padding:24px 0 4px; }
@@ -108,9 +109,7 @@
   @media (max-width:560px) {
     .site-header { align-items:start; flex-direction:column; padding-block:22px; gap:20px; }
     .main-nav { width:100%; justify-content:space-between; gap:12px; }
-    .wordmark br { display:none; }
     .wordmark { display:flex; gap:5px; font-size:21px; }
-    .red-dot { margin-left:-5px; }
     .hero { padding-block:40px; }
     .hero h1 { font-size:clamp(40px,9.8vw,54px); }
     .mobile-break { display:block; }

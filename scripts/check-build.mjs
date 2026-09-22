@@ -19,8 +19,9 @@ for (const file of htmlFiles) {
   }
 }
 const home = await readFile(join(root, 'index.html'), 'utf8');
-assert.equal((home.match(/class="project-row"/g) || []).length, 6, 'Homepage should include all six curated public repositories.');
+const projectFiles = (await readdir('src/content/projects')).filter(file => file.endsWith('.md'));
+assert.equal((home.match(/class="project-row"/g) || []).length, projectFiles.length, 'Every curated project must appear on the homepage.');
 assert.ok(home.includes('10.3390') || home.includes('/papers/continuous-mobile-user-authentication/'), 'Homepage must link to the research.');
 assert.ok(!files.some(file => file.includes('/notes/first-note/')), 'Draft notes must never be published.');
 assert.ok(!(await readFile(join(root, 'sitemap.xml'), 'utf8')).includes('first-note'), 'Drafts must be excluded from sitemap.');
-console.log(`Verified ${htmlFiles.length} pages: local links resolve, six projects are listed, and draft notes stay private.`);
+console.log(`Verified ${htmlFiles.length} pages: local links resolve, ${projectFiles.length} projects are listed, and draft notes stay private.`);

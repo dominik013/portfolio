@@ -72,6 +72,8 @@
   .about-statement { font:400 clamp(30px,4vw,48px)/1.13 Georgia,serif; letter-spacing:-.035em; }
   .about-statement em { color:var(--red); }
   .about-copy { align-self:end; }
+  .about-copy p + p { margin-top:8px; }
+  .about-github { display:inline-block; margin-top:20px; }
   .site-footer { display:flex; justify-content:space-between; align-items:baseline; gap:24px; flex-wrap:wrap; border-top:1px solid var(--ink); padding:24px 0 34px; color:var(--muted); }
   .site-footer > div { display:flex; flex-wrap:wrap; gap:20px; }
   .site-footer a { padding-block:10px; }

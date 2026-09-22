@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import '../styles/global.css';
 interface Props { title?: string; description?: string; noindex?: boolean; }
-const { title = 'Software, papers & small experiments', description = 'The personal portfolio of Dominik Reichinger. Software projects, mobile authentication research, and experiments.', noindex = false } = Astro.props;
+const { title = 'Code, curiosity & side quests', description = 'The personal portfolio of Dominik Reichinger. Software projects, mobile authentication research, and experiments.', noindex = false } = Astro.props;
 const notes = await getCollection('notes', ({ data }) => !data.draft);
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const fullTitle = `${title} — Dominik Reichinger`;
